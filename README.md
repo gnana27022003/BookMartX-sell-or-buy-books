@@ -14,32 +14,6 @@
 - 📁 Image upload support for listed books.
 - 📱 Responsive and user-friendly frontend using EJS templates.
 
----
-
-## 🚀 Project Folder Structure
-
-```
-BookMartX/
-├── css/                   # Styling files
-├── img/                   # Static images
-├── js/                    # Client-side scripts
-├── middleware/            # Middleware functions
-├── model/                 # Mongoose models
-│   ├── usermodel.js
-│   └── sellermodel.js
-├── node_modules/          # Installed npm packages
-├── router/                # Route definitions
-│   ├── basicroutes.js
-│   ├── userroutes.js
-│   └── sellerroutes.js
-├── sellerJs/              # Seller-side JS logic
-├── userJs/                # User-side JS logic
-├── uploads/               # Uploaded book images
-├── views/                 # EJS view templates
-└── app.js / server.js     # Main server file
-```
-
----
 
 ## 🛠️ Installation & Execution
 
