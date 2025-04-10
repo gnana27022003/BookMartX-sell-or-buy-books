@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduexchange</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F2F0EF;
+        }
+
+        .main-content {
+            padding-top: 90px; /* Adjust padding to match navbar height */
+        }
+
+        /* Seller Section */
+        .seller-section {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            padding: 40px;
+            margin: 20px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            top: 2px;
+            width: 100%;
+        }
+
+        .contact-btn {
+            background-color: #eb8b4e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            width: 200px;
+            height: 50px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 10px 0;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            background-color: #351E10;
+        }
+
+        /* Projects Section */
+        #projects h2 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #351E10;
+            font-size: 26px;
+            margin-left: 28px;
+            margin-bottom: 8px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 250px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .project img {
+            width: 250px;
+            height: 300px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px #351E10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px #351E10;
+        }
+
+        .project-address {
+            font-size: 18px;
+            color: #351E10;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+ 
+<%- include('header') %>
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Seller Information Section -->
+        <div class="seller-section">
+            <div class="seller-info">
+                <h1><%= x.name %></h1>
+                <p><strong>Phone:</strong> <%= x.phone %></p>
+            </div>
+            <!-- Container for Contact Button -->
+            <div class="contact-container">
+                <button class="contact-btn" onclick="location.href='/sendemail'">Send mail ✉</button>
+            </div>
+        </div>
+
+        <!-- Books Section -->
+        <section id="projects">
+            <h2>Books</h2>
+            <div class="container">
+                <!-- Loop to display each book -->
+                <% x.books.forEach(book => { %>
+                    <div class="project">
+                        <!-- Display each book's image -->
+                        <img src="/uploads/<%= book.book_image.filename %>" alt="Book Image" class="project-image">
+                        <!-- Display only the book title -->
+                        <p class="project-address">Title: <%= book.title %></p>
+                        <p>Author: <%= book.author %></p>
+                        <p>Price: <%= book.price %> Rs</p>
+                        <p>Category: <%= book.category %></p>
+                        <p>Condition: <%= book.condition %></p>
+                        <% if (book.sold === 'yes') { %>
+                          <p style="color: red;">Sold Out</p>
+                        <% } %>
+                        <% if (currentUser && currentUser.uniqueId === x.uniqueId && book.sold !== 'yes') { %>
+                          <form action="/sold" method="POST" style="display: inline;">
+                            <input type="hidden" name="bookId" value="<%= book._id %>">
+                            <button type="submit" class="contact-btn">Mark as Sold</button>
+                          </form>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

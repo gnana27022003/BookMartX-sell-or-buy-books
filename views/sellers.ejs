@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduexchange</title>
+    <style>
+        
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color:#F2F0EF;
+}
+      
+       
+        .main-content {
+  padding-top: 90px; /* adjust the value to match the navbar height */
+}
+
+        .content {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+         
+        }
+        .section-heading {
+            text-align: center;
+            color:#351E10;
+            padding: 5px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        .section-heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-logo {
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
+}
+.plumber-card {            
+    background-color: white;            
+    padding: 20px;            
+    border-radius: 10px;            
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);            
+    display: flex;            
+    flex-direction: row;                        
+    width: 100%;        
+    max-width: 1300px;        
+    margin-bottom: 20px; /* Add this line to create a gap between components */
+}
+
+
+        .plumber-card img {
+            height: 150px;
+            width: 150px;
+            border-radius: 10%;
+        }
+
+        .plumber-details {
+            flex-grow: 1;
+        }
+
+        .plumber-details h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            color: #eb8b4e;
+        }
+
+        
+        .rating {
+            display: flex;
+            align-items: left;
+            justify-content: left;
+            margin: 10px 0;
+        }
+        .rating span {
+            font-size: 20px;
+            color: #f5b301;
+            margin-right: 10px;
+            
+        }
+         .rating p {
+            margin: 0;
+            color: #666;
+        }
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            color: #351E10;
+            margin-bottom: 15px;
+        }
+        .location img{
+            height: 20px;
+            width: 15px;
+            border-radius: 50%
+        }
+
+        .description {
+            font-size: 16px;
+            color: #351E10;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons button {
+            background-color: #351E10;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button:hover{
+            background-color: #eb8b4e;
+        }
+
+        .buttons .view-more {
+            background-color: #ccc;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+   <%- include('header') %>
+        
+    <div class="main-content">
+        <div class="section-heading">
+          <div class="section-heading-container">
+            <h2><%= category %></h2>
+          </div>
+        </div>
+    </div>
+    <div class="content">
+        <% sellers.forEach(seller => { %>
+        <div class="plumber-card">
+            <div class="plumber-details">
+                <h2>Seller: <%= seller.name %></h2>
+                    <% seller.books.forEach(book => { %>
+                    <% if (book.category === category) { %>
+                    <div class="book-details">
+                        <h3>Book Title: <%= book.title %></h3>
+                        <p>Author: <%= book.author %></p>
+                        <p>Price: <%= book.price %> Rs</p>
+                    </div>
+                    <% } %>
+          <% }); %>
+            </div>
+            <div class="buttons">
+                <button class="send-message" onclick="location.href='/sendemail'">Send Message</button>
+                <button class="view-more" onclick="location.href='/seller/<%= seller.uniqueId %>'">View More</button>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.send-message').forEach(button => {
+  button.addEventListener('click', () => {
+    const plumberName = button.parentNode.parentNode.querySelector('h2').textContent;
+    alert(`Send Message to ${plumberName}!`);
+  });
+});
+
+
+
+    </script>
+</body>
+</html>
+
